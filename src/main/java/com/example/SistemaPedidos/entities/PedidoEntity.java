@@ -2,9 +2,6 @@ package com.example.SistemaPedidos.entities;
 
 import java.io.Serializable;
 import java.util.Set;
-import java.util.UUID;
-
-import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
@@ -20,7 +17,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "pedidos")
-public class PedidoEntity extends RepresentationModel<PedidoEntity> implements Serializable {
+public class PedidoEntity implements Serializable {
 //Pedido faz a relação entre ItemPedido e Usuario em uma tabela
 
     private static final long serialVersionUID = 1L;

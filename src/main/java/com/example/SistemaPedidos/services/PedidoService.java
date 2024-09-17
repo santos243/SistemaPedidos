@@ -4,12 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import org.springframework.stereotype.Service;
 
-import com.example.SistemaPedidos.controllers.PedidoController;
-import com.example.SistemaPedidos.controllers.ProdutoController;
-import com.example.SistemaPedidos.controllers.UsuarioController;
 import com.example.SistemaPedidos.dtos.ItemPedidoRecordDto;
 import com.example.SistemaPedidos.dtos.PedidoRecordDto;
 import com.example.SistemaPedidos.entities.ItemPedidoEntity;
@@ -21,8 +17,6 @@ import com.example.SistemaPedidos.repositories.PedidoRepository;
 import com.example.SistemaPedidos.repositories.ProdutoRepository;
 import com.example.SistemaPedidos.repositories.UsuarioRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PedidoService {
@@ -84,7 +78,7 @@ public class PedidoService {
     //metodos find/findById usuario e pedido
     public PedidoEntity findPedidoById(Long id_pedido) throws Exception {
         var pedidoEncontrado = pedidoRepository.findById(id_pedido).orElseThrow(() -> new Exception("ID do pedido nao encontrado na base de dados:/"));
-        pedidoEncontrado.getItens();
+//        pedidoEncontrado.getItens();
         return pedidoEncontrado;
     }
 
@@ -103,31 +97,13 @@ public class PedidoService {
     }
 
     /**
-     * Método getAll com implementação dos HATEOAS em cada, pedido, item,
-     * usuario.
+     * metodo getAll para pedios
      *
      * @return
      * @throws Exception
      */
     public List<PedidoEntity> getAllPedido() throws Exception {
         var pedidos = findAllPedidos();
-
-        var usuarios = usuarioRepository.findAll();
-        var produtos = produtoRepository.findAll();
-        //abaixo segue somente os links que levarao para a localização de cada item
-        for (PedidoEntity pedidoFor : pedidos) {
-            Long id_pedido = pedidoFor.getId_pedido();
-            pedidoFor.add(linkTo(WebMvcLinkBuilder.methodOn(PedidoController.class).getPedido(id_pedido)).withSelfRel());
-        }
-        for (ProdutoEntity produtoFor : produtos) {
-            Long id_produto = produtoFor.getId_produto();
-            produtoFor.add(linkTo(WebMvcLinkBuilder.methodOn(ProdutoController.class).getProduto(id_produto)).withSelfRel());
-        }
-        for (UsuarioEntity usuarioFor : usuarios) {
-            Long id_usuario = usuarioFor.getId_usuario();
-            usuarioFor.add(linkTo(methodOn(UsuarioController.class).getUsuario(id_usuario)).withSelfRel());
-        }
-
         return pedidos;
     }
 
@@ -169,19 +145,4 @@ public class PedidoService {
         pedidoEncontrado.setItens(itens);
     }
 
-    /**
-     * Realiza a busca do usuario pelo id do pedido(fútil)
-     *
-     * @param id_pedido
-     * @return
-     * @throws Exception
-     */
-    public String findUsuarioByIdPedido(Long id_pedido) throws Exception {
-        var pedido = pedidoRepository.findById(id_pedido).orElseThrow(() -> new Exception("ID pedido nao econtrado"));
-        return pedido.getUsuario().getNome();
-    }
-
-//    public ProdutoEntity findProdutoById(UUID idProduto) throws Exception {
-//        return produtoRepository.findById(idProduto).orElseThrow(() -> new Exception("ID produto nao encontrado no banco de dados"));
-//    }
 }

@@ -1,17 +1,13 @@
 package com.example.SistemaPedidos.services;
 
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
-import com.example.SistemaPedidos.controllers.UsuarioController;
 import com.example.SistemaPedidos.dtos.UsuarioRecordDto;
 import com.example.SistemaPedidos.entities.UsuarioEntity;
 import com.example.SistemaPedidos.repositories.UsuarioRepository;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class UsuarioService {
@@ -36,12 +32,6 @@ public class UsuarioService {
 
     public List<UsuarioEntity> getAllUsuario() throws Exception {
         List<UsuarioEntity> usuarios = usuarioRepository.findAll();
-        if(!usuarios.isEmpty()) {
-            for(UsuarioEntity usuario : usuarios) {
-                Long id_usuario = usuario.getId_usuario();
-                usuario.add(linkTo(methodOn(UsuarioController.class).getUsuario(id_usuario)).withSelfRel());
-            }
-        }
         return usuarios;
     }
 

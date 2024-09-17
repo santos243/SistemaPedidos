@@ -4,13 +4,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.SistemaPedidos.controllers.ProdutoController;
 import com.example.SistemaPedidos.dtos.ProdutoRecordDto;
 import com.example.SistemaPedidos.entities.ProdutoEntity;
 import com.example.SistemaPedidos.repositories.ProdutoRepository;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @Service
@@ -42,12 +39,6 @@ public class ProdutoService {
     //metodos get para todos e para um
     public List<ProdutoEntity> getAllProdutos() throws Exception {
         var produtos = produtoRepository.findAll();
-        if (!produtos.isEmpty()) {
-            for (ProdutoEntity produto : produtos) {
-                Long id_produto = produto.getId_produto();
-                produto.add(linkTo(methodOn(ProdutoController.class).getProduto(id_produto)).withSelfRel());
-            }
-        }
         return produtos;
     }
     

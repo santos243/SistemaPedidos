@@ -2,7 +2,6 @@ package com.example.SistemaPedidos.entities;
 
 import java.io.Serializable;
 
-import org.springframework.hateoas.RepresentationModel;
 
 
 import jakarta.persistence.Entity;
@@ -13,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuarios_clientes")
-public class UsuarioEntity extends RepresentationModel<UsuarioEntity> implements Serializable {
+public class UsuarioEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
