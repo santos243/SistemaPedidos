@@ -1,0 +1,5 @@
+package com.example.SistemaPedidos.repositories;
+
+public interface ProdutoRepository {
+
+}

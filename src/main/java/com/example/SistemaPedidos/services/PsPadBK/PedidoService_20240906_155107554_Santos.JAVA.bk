@@ -1,0 +1,148 @@
+package com.example.SistemaPedidos.services;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import org.springframework.stereotype.Service;
+
+import com.example.SistemaPedidos.controllers.PedidoController;
+import com.example.SistemaPedidos.controllers.ProdutoController;
+import com.example.SistemaPedidos.controllers.UsuarioController;
+import com.example.SistemaPedidos.dtos.ItemPedidoRecordDto;
+import com.example.SistemaPedidos.dtos.PedidoRecordDto;
+import com.example.SistemaPedidos.entities.ItemPedidoEntity;
+import com.example.SistemaPedidos.entities.PedidoEntity;
+import com.example.SistemaPedidos.entities.ProdutoEntity;
+import com.example.SistemaPedidos.entities.UsuarioEntity;
+import com.example.SistemaPedidos.repositories.ItemPedidoRepository;
+import com.example.SistemaPedidos.repositories.PedidoRepository;
+import com.example.SistemaPedidos.repositories.ProdutoRepository;
+import com.example.SistemaPedidos.repositories.UsuarioRepository;
+
+@Service
+public class PedidoService {
+
+    private PedidoRepository pedidoRepository;
+    private UsuarioRepository usuarioRepository;
+    private ItemPedidoRepository itemPedidoRepository;
+    private ProdutoRepository produtoRepository;
+
+    public PedidoService(PedidoRepository pedidoRepository, UsuarioRepository usuarioRepository, ItemPedidoRepository itemPedidoRepository, ProdutoRepository produtoRepository) {
+        this.pedidoRepository = pedidoRepository;
+        this.itemPedidoRepository = itemPedidoRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.produtoRepository = produtoRepository;
+    }
+
+    //metodo criar pedido
+    public PedidoEntity createPedido(PedidoRecordDto pedidoRecordDto) throws Exception {
+        // Busca o usuario pelo ID
+        UsuarioEntity usuario = usuarioRepository.findById(pedidoRecordDto.idUsuario()).orElseThrow(() -> new Exception("Usuário não encontrado:/"));
+        // Criação de um novo pedido
+        PedidoEntity pedido = new PedidoEntity();
+        pedido.setUsuario(usuario);
+        // iniciando uma variavel para gerar o id do pedido, uma vez que o pedido é salvo
+        var pedidoSalvo = pedidoRepository.save(pedido);
+
+        Set<ItemPedidoEntity> itens = new HashSet<>();
+        for (ItemPedidoRecordDto item : pedidoRecordDto.itemPedidoRecordDto()) {
+            ProdutoEntity produto = produtoRepository.findById(item.idProduto()).orElseThrow(() -> new Exception("ID do produto nao encontrado:/"));
+            ItemPedidoEntity itemPedido = new ItemPedidoEntity();
+            itemPedido.setProdutoEntity(produto);
+            itemPedido.setIdItemPedido(pedido.getIdPedido());
+            itemPedido.setQuantidade(item.quantidade());
+            itemPedido.setPedidoEntity(pedidoSalvo);
+            itens.add(itemPedido);
+            itemPedidoRepository.save(itemPedido);
+//            item.setProdutoEntity(produto);
+//            item.setQuantidade(item.getQuantidade());
+//            itemPedidoRepository.save(itens);
+
+        }
+        pedido.setItens(itens);
+        pedido.setIdPedido(pedidoSalvo.getIdPedido());
+//        pedidoSalvo = pedido;
+        return pedido;
+    }
+
+    //metodos de delete do pedido e item pedido
+    public void deletePedidoById(UUID idPedido) {
+        pedidoRepository.deleteById(idPedido);
+        itemPedidoRepository.deleteById(idPedido);
+    }
+
+    //metodos find/findById usuario e pedido
+    public PedidoEntity findPedidoById(UUID idPedido) throws Exception {
+        var pedidoEncontrado = pedidoRepository.findById(idPedido).orElseThrow(() -> new Exception("ID do pedido nao encontrado na base de dados:/"));
+        pedidoEncontrado.getItens();
+        return pedidoEncontrado;
+    }
+
+    public List<PedidoEntity> findAllPedidos() {
+        return pedidoRepository.findAll();
+    }
+
+    public UsuarioEntity findUsuarioById(UUID idUsuario) throws Exception {
+        var usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new Exception("ID do usuario nao encontrado:/"));
+        return usuario;
+    }
+
+    //metodos get para pedido
+    public PedidoEntity getPedido(UUID idPedido) throws Exception {
+        var pedido = findPedidoById(idPedido);
+        return pedido;
+    }
+
+
+    public List<PedidoEntity> getAllPedido() throws Exception {
+        var pedidos = findAllPedidos();
+        //o find para usuarios e produtos servem apenas para que o metodo gere links de endereço para cada um.
+        var usuarios = usuarioRepository.findAll();
+        var produtos = produtoRepository.findAll();
+        //abaixo o for serve apenas para gerar os links que leva para o endereço de cada um.
+        for(PedidoEntity pedidoFor : pedidos){
+                UUID idPedido = pedidoFor.getIdPedido();
+                pedidoFor.add(linkTo(WebMvcLinkBuilder.methodOn(PedidoController.class).getPedido(idPedido)).withSelfRel());
+            }
+            for (UsuarioEntity usuarioFor : usuarios) {
+                UUID idUsuario = usuarioFor.getIdUsuario();
+                usuarioFor.add(linkTo(WebMvcLinkBuilder.methodOn(UsuarioController.class).getUsuario(idUsuario)).withSelfRel());
+            }
+            for (ProdutoEntity produtoFor : produtos) {
+                UUID idPRoduto = produtoFor.getIdProduto();
+                produtoFor.add(linkTo(WebMvcLinkBuilder.methodOn(ProdutoController.class).getProduto(idPRoduto)).withSelfRel());
+            }
+
+        return pedidos;
+        }
+
+
+    //metodo update pedido
+    public PedidoEntity updatePedido(UUID idPedido, PedidoRecordDto pedidoRecordDto) throws Exception {
+        var pedidoEncontrado = findPedidoById(idPedido);
+        findUsuarioById(pedidoRecordDto.idUsuario());
+        var pedidoRecriado = createPedido(pedidoRecordDto);
+//        List<ItemPedidoEntity> itens = new ArrayList<>();
+//        for(ItemPedidoRecordDto item : pedidoRecordDto.itemPedidoRecordDto()) {
+//            ProdutoEntity produto = new ProdutoEntity();
+//
+//            ItemPedidoEntity itemPedido = new ItemPedidoEntity();
+//            itemPedido.setProdutoEntity(produto);
+//            itemPedido.setQuantidade(item.quantidade());
+//            itens.add(itemPedido);
+//            itemPedidoRepository.save(itemPedido);
+//        }
+//        update.setUsuario(usuario);
+//        update.setItensPedido(itens);
+//        var pedidoSalvo = pedidoRepository.save(update);
+//        return pedidoSalvo;
+        itemPedidoRepository.deleteById(idPedido);
+        pedidoRepository.delete(pedidoEncontrado);
+
+        return pedidoRecriado;
+    }
+}
