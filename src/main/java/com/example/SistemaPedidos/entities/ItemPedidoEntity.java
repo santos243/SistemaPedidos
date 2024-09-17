@@ -1,7 +1,6 @@
 package com.example.SistemaPedidos.entities;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
