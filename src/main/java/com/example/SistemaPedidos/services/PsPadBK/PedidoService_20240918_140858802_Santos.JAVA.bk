@@ -59,10 +59,14 @@ public class PedidoService {
             itemPedido.setPedidoEntity(pedidoSalvo);
             itens.add(itemPedido);
             itemPedidoRepository.save(itemPedido);
+//            item.setProdutoEntity(produto);
+//            item.setQuantidade(item.getQuantidade());
+//            itemPedidoRepository.save(itens);
 
         }
         pedido.setItens(itens);
         pedido.setId_pedido(pedidoSalvo.getId_pedido());
+//        pedidoSalvo = pedido;
         return pedido;
     }
 
@@ -74,6 +78,7 @@ public class PedidoService {
     //metodos find/findById usuario e pedido
     public PedidoEntity findPedidoById(Long id_pedido) throws Exception {
         var pedidoEncontrado = pedidoRepository.findById(id_pedido).orElseThrow(() -> new Exception("ID do pedido nao encontrado na base de dados:/"));
+//        pedidoEncontrado.getItens();
         return pedidoEncontrado;
     }
 
