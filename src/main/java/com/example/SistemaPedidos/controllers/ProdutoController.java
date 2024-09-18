@@ -28,13 +28,14 @@ public class ProdutoController {
     }
 
     @PostMapping("/produtos")
-    public ResponseEntity<ProdutoEntity> addProduto(@RequestBody@Valid ProdutoRecordDto produtoRecordDto) {
+    public ResponseEntity<ProdutoEntity> addProduto(@RequestBody @Valid ProdutoRecordDto produtoRecordDto) {
         var produto = produtoService.addProduto(produtoRecordDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(produto);
     }
 
     @GetMapping("/produtos/{idProduto}")
-    public ResponseEntity<ProdutoEntity> getProduto(@PathVariable(value="idProduto")Long id_produto) throws Exception {
+    public ResponseEntity<ProdutoEntity> getProduto(@PathVariable(value = "idProduto") Long id_produto)
+            throws Exception {
         var produtoEncontrado = produtoService.findProdutoById(id_produto);
         return ResponseEntity.status(HttpStatus.OK).body(produtoEncontrado);
     }
@@ -46,14 +47,14 @@ public class ProdutoController {
     }
 
     @PutMapping("/produtos/{idProduto}")
-    public ResponseEntity<ProdutoEntity> updateProduto(@PathVariable(value="idProduto")Long id_produto,
-    @RequestBody@Valid ProdutoRecordDto produtoRecordDto) throws Exception {
+    public ResponseEntity<ProdutoEntity> updateProduto(@PathVariable(value = "idProduto") Long id_produto,
+            @RequestBody @Valid ProdutoRecordDto produtoRecordDto) throws Exception {
         var produto = produtoService.updateProduto(id_produto, produtoRecordDto);
         return ResponseEntity.status(HttpStatus.OK).body(produto);
     }
 
     @DeleteMapping("/produtos/{idProduto}")
-    public ResponseEntity<Object> deleteProduto(@PathVariable(value="idProduto")Long id_produto) {
+    public ResponseEntity<Object> deleteProduto(@PathVariable(value = "idProduto") Long id_produto) {
         produtoService.deleteProdutoById(id_produto);
         return ResponseEntity.status(HttpStatus.OK).body("Deleção efetuada com sucesso");
     }
