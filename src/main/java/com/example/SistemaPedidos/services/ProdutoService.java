@@ -18,7 +18,7 @@ public class ProdutoService {
     public ProdutoService(ProdutoRepository produtoRepository) {
         this.produtoRepository = produtoRepository;
     }
-    
+
     //metodo find
     public ProdutoEntity findProdutoById(Long id_produto) throws Exception {
         var produto = produtoRepository.findById(id_produto).orElseThrow(() -> new Exception(" "));
@@ -37,17 +37,17 @@ public class ProdutoService {
         return produtoRepository.save(produto);
     }
     //metodos get para todos e para um
-    public List<ProdutoEntity> getAllProdutos() throws Exception {
-        var produtos = produtoRepository.findAll();
-        return produtos;
+    public List<ProdutoEntity> getAllProdutos() {
+        var produtosencontrados = produtoRepository.findAll();
+        return produtosencontrados;
     }
-    
+
     /**
      * Este metodo sevre para atualizar produtos, porém os pedidos ficarao desatualizados
      * @param id_produto
      * @param produtoRecordDto
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     public ProdutoEntity updateProduto(Long id_produto, ProdutoRecordDto produtoRecordDto) throws Exception {
         var produto = findProdutoById(id_produto);
