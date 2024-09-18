@@ -26,7 +26,8 @@ public class PedidoService {
     private ItemPedidoRepository itemPedidoRepository;
     private ProdutoRepository produtoRepository;
 
-    public PedidoService(PedidoRepository pedidoRepository, UsuarioRepository usuarioRepository, ItemPedidoRepository itemPedidoRepository, ProdutoRepository produtoRepository) {
+    public PedidoService(PedidoRepository pedidoRepository, UsuarioRepository usuarioRepository,
+            ItemPedidoRepository itemPedidoRepository, ProdutoRepository produtoRepository) {
         this.pedidoRepository = pedidoRepository;
         this.itemPedidoRepository = itemPedidoRepository;
         this.usuarioRepository = usuarioRepository;
@@ -42,16 +43,19 @@ public class PedidoService {
      */
     public PedidoEntity createPedido(PedidoRecordDto pedidoRecordDto) throws Exception {
         // Busca o usuario pelo ID
-        UsuarioEntity usuario = usuarioRepository.findById(pedidoRecordDto.id_usuario()).orElseThrow(() -> new Exception("Usuário não encontrado:/"));
+        UsuarioEntity usuario = usuarioRepository.findById(pedidoRecordDto.id_usuario())
+                .orElseThrow(() -> new Exception("Usuário não encontrado:/"));
         // Criação de um novo pedido
         PedidoEntity pedido = new PedidoEntity();
         pedido.setUsuario(usuario);
-        //inciando uma variavel para salvar o pedido, e assim gerar um id automaticamente
+        // inciando uma variavel para salvar o pedido, e assim gerar um id
+        // automaticamente
         var pedidoSalvo = pedidoRepository.save(pedido);
 
         Set<ItemPedidoEntity> itens = new HashSet<>();
         for (ItemPedidoRecordDto item : pedidoRecordDto.itemPedidoRecordDto()) {
-            ProdutoEntity produto = produtoRepository.findById(item.id_produto()).orElseThrow(() -> new Exception("ID do produto nao encontrado:/"));
+            ProdutoEntity produto = produtoRepository.findById(item.id_produto())
+                    .orElseThrow(() -> new Exception("ID do produto nao encontrado:/"));
             ItemPedidoEntity itemPedido = new ItemPedidoEntity();
             itemPedido.setProdutoEntity(produto);
             itemPedido.setId_itemPedido(pedido.getId_pedido());
@@ -59,26 +63,22 @@ public class PedidoService {
             itemPedido.setPedidoEntity(pedidoSalvo);
             itens.add(itemPedido);
             itemPedidoRepository.save(itemPedido);
-//            item.setProdutoEntity(produto);
-//            item.setQuantidade(item.getQuantidade());
-//            itemPedidoRepository.save(itens);
 
         }
         pedido.setItens(itens);
         pedido.setId_pedido(pedidoSalvo.getId_pedido());
-//        pedidoSalvo = pedido;
         return pedido;
     }
 
-    //metodos de delete do pedido e item pedido
+    // metodos de delete do pedido e item pedido
     public void deletePedidoById(Long id_pedido) {
         pedidoRepository.deleteById(id_pedido);
     }
 
-    //metodos find/findById usuario e pedido
+    // metodos find/findById usuario e pedido
     public PedidoEntity findPedidoById(Long id_pedido) throws Exception {
-        var pedidoEncontrado = pedidoRepository.findById(id_pedido).orElseThrow(() -> new Exception("ID do pedido nao encontrado na base de dados:/"));
-//        pedidoEncontrado.getItens();
+        var pedidoEncontrado = pedidoRepository.findById(id_pedido)
+                .orElseThrow(() -> new Exception("ID do pedido nao encontrado na base de dados:/"));
         return pedidoEncontrado;
     }
 
@@ -87,7 +87,8 @@ public class PedidoService {
     }
 
     public UsuarioEntity findUsuarioById(Long id_usuario) throws Exception {
-        var usuario = usuarioRepository.findById(id_usuario).orElseThrow(() -> new Exception("ID do usuario nao encontrado:/"));
+        var usuario = usuarioRepository.findById(id_usuario)
+                .orElseThrow(() -> new Exception("ID do usuario nao encontrado:/"));
         return usuario;
     }
 
@@ -113,14 +114,15 @@ public class PedidoService {
      * @param id_pedido
      * @throws Exception
      */
-//    @Transactional
-//    public void deleteItensDoPedido(Long id_pedido) throws Exception {
-//        itemPedidoRepository.deleteAllByIdPedido(id_pedido);
-//    }
+    // @Transactional
+    // public void deleteItensDoPedido(Long id_pedido) throws Exception {
+    // itemPedidoRepository.deleteAllByIdPedido(id_pedido);
+    // }
 
     /**
      * Método de restauração dos itens pedidos do pedido sem deletar o pedido
-     * deleta os itens pedidos antigos para os novos itens pedidos colcados no record Dto
+     * deleta os itens pedidos antigos para os novos itens pedidos colcados no
+     * record Dto
      *
      * @param id_pedido
      * @param pedidoRecordDto
@@ -130,7 +132,7 @@ public class PedidoService {
     public void addItensAoPedido(Long id_pedido, PedidoRecordDto pedidoRecordDto) throws Exception {
         PedidoEntity pedidoEncontrado = findPedidoById(id_pedido);
         itemPedidoRepository.deleteAllByIdPedido(id_pedido);
-        Set<ItemPedidoEntity> itens = new HashSet();
+        Set<ItemPedidoEntity> itens = new HashSet<>();
 
         for (ItemPedidoRecordDto item : pedidoRecordDto.itemPedidoRecordDto()) {
             ProdutoEntity produto = produtoRepository.findById(item.id_produto())

@@ -28,7 +28,8 @@ public class PedidoController {
     }
 
     @PostMapping("/pedido")
-    public ResponseEntity<PedidoEntity> addPedido(@RequestBody @Valid PedidoRecordDto pedidoRecordDto) throws Exception {
+    public ResponseEntity<PedidoEntity> addPedido(@RequestBody @Valid PedidoRecordDto pedidoRecordDto)
+            throws Exception {
         var pedido = pedidoService.createPedido(pedidoRecordDto);
         return ResponseEntity.status(HttpStatus.OK).body(pedido);
     }
@@ -60,7 +61,7 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.OK).body("Itens adicionado ao pedido do usuario");
     }
 
-    //Delete no pedido inteiro
+    // Delete no pedido inteiro
     @DeleteMapping("/pedido/id/{pedido}")
     public ResponseEntity<String> deletePedido(@PathVariable(value = "pedido") Long id_pedido) {
         pedidoService.deletePedidoById(id_pedido);
