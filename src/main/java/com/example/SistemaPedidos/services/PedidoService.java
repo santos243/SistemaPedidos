@@ -16,6 +16,7 @@ import com.example.SistemaPedidos.repositories.ItemPedidoRepository;
 import com.example.SistemaPedidos.repositories.PedidoRepository;
 import com.example.SistemaPedidos.repositories.ProdutoRepository;
 import com.example.SistemaPedidos.repositories.UsuarioRepository;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -70,11 +71,6 @@ public class PedidoService {
         return pedido;
     }
 
-    // metodos de delete do pedido e item pedido
-    public void deletePedidoById(Long id_pedido) {
-        pedidoRepository.deleteById(id_pedido);
-    }
-
     // metodos find/findById usuario e pedido
     public PedidoEntity findPedidoById(Long id_pedido) throws Exception {
         var pedidoEncontrado = pedidoRepository.findById(id_pedido)
@@ -109,17 +105,6 @@ public class PedidoService {
     }
 
     /**
-     * Método de delete especificamente para deletar os itens de um pedido.
-     *
-     * @param id_pedido
-     * @throws Exception
-     */
-    // @Transactional
-    // public void deleteItensDoPedido(Long id_pedido) throws Exception {
-    // itemPedidoRepository.deleteAllByIdPedido(id_pedido);
-    // }
-
-    /**
      * Método de restauração dos itens pedidos do pedido sem deletar o pedido
      * deleta os itens pedidos antigos para os novos itens pedidos colcados no
      * record Dto
@@ -147,4 +132,8 @@ public class PedidoService {
         pedidoEncontrado.setItens(itens);
     }
 
+    // método para deletar o pedido inteiro.
+    public void deletePedidoById(Long id_pedido) {
+        pedidoRepository.deleteById(id_pedido);
+    }
 }

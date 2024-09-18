@@ -47,7 +47,8 @@ public class PedidoController {
     }
 
     /**
-     * Delete em todos os itens pedidos dentro de um pedido sem afetar o objeto "PEDIDO"
+     * Delete em todos os itens pedidos dentro de um pedido sem afetar o objeto
+     * "PEDIDO"
      *
      * @param id_pedido
      * @param pedidoRecordDto
@@ -67,4 +68,6 @@ public class PedidoController {
         pedidoService.deletePedidoById(id_pedido);
         return ResponseEntity.status(HttpStatus.OK).body("Deleção do pedido efetuada com sucesso");
     }
+
+    //implementar um método para a exclusao de itens pedidos dentro de um pedido
 }
