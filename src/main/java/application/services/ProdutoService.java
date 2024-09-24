@@ -1,12 +1,13 @@
-package com.example.SistemaPedidos.services;
+package application.services;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.example.SistemaPedidos.dtos.ProdutoRecordDto;
-import com.example.SistemaPedidos.entities.ProdutoEntity;
-import com.example.SistemaPedidos.repositories.ProdutoRepository;
+
+import domain.entities.ProdutoEntity;
+import infrastructure.repositories.ProdutoRepository;
 
 
 
@@ -56,5 +57,4 @@ public class ProdutoService {
         produto.setValor(produtoRecordDto.valor());
         return produtoRepository.save(produto);
     }
-
 }
