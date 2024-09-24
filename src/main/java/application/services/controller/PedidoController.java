@@ -28,7 +28,8 @@ public class PedidoController {
     }
 
     @PostMapping("/pedido")
-    public ResponseEntity<PedidoEntity> addPedido(@RequestBody @Valid PedidoRecordDto pedidoRecordDto) throws Exception {
+    public ResponseEntity<PedidoEntity> addPedido(@RequestBody @Valid PedidoRecordDto pedidoRecordDto)
+            throws Exception {
         var pedido = pedidoService.createPedido(pedidoRecordDto);
         return ResponseEntity.status(HttpStatus.OK).body(pedido);
     }
@@ -46,7 +47,8 @@ public class PedidoController {
     }
 
     /**
-     * Delete em todos os itens pedidos dentro de um pedido sem afetar o objeto "PEDIDO"
+     * Delete em todos os itens pedidos dentro de um pedido sem afetar o objeto
+     * "PEDIDO"
      *
      * @param id_pedido
      * @param pedidoRecordDto
@@ -60,7 +62,14 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.OK).body("Itens adicionado ao pedido do usuario");
     }
 
-    //Delete no pedido inteiro
+    // Apagar itens do pedido
+    @PutMapping("/apagar/itens/id/{pedido}")
+    public ResponseEntity<String> deleteItemPEdido(@PathVariable(value = "pedido") Long id_pedido) throws Exception {
+        pedidoService.deleteItensDoPedido(id_pedido);
+        return ResponseEntity.status(HttpStatus.OK).body("Itens do pedido deletado com sucesso");
+    }
+
+    // Delete no pedido inteiro
     @DeleteMapping("/pedido/id/{pedido}")
     public ResponseEntity<String> deletePedido(@PathVariable(value = "pedido") Long id_pedido) {
         pedidoService.deletePedidoById(id_pedido);
