@@ -29,6 +29,7 @@ public class ItemPedidoEntity implements Serializable {
 
     @ManyToOne
     private ProdutoEntity produtoEntity;
+
     private int quantidade;
 
     public ItemPedidoEntity() {

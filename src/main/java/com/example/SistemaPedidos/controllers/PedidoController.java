@@ -69,5 +69,4 @@ public class PedidoController {
         return ResponseEntity.status(HttpStatus.OK).body("Deleção do pedido efetuada com sucesso");
     }
 
-    //implementar um método para a exclusao de itens pedidos dentro de um pedido
 }

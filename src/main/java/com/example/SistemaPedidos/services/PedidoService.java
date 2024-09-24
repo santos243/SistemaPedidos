@@ -104,10 +104,14 @@ public class PedidoService {
         return pedidos;
     }
 
+    //Delete itens do pedido
+    @Transactional
+    public void deleteItensDoPedido(Long id_pedido) throws Exception {
+        itemPedidoRepository.deleteAllByIdPedido(id_pedido);
+    }
+
     /**
-     * Método de restauração dos itens pedidos do pedido sem deletar o pedido
-     * deleta os itens pedidos antigos para os novos itens pedidos colcados no
-     * record Dto
+     * Método de UPDATE, deleção dos itens pedidos e reposição com os "novos" itens
      *
      * @param id_pedido
      * @param pedidoRecordDto
@@ -116,7 +120,7 @@ public class PedidoService {
     @Transactional
     public void addItensAoPedido(Long id_pedido, PedidoRecordDto pedidoRecordDto) throws Exception {
         PedidoEntity pedidoEncontrado = findPedidoById(id_pedido);
-        itemPedidoRepository.deleteAllByIdPedido(id_pedido);
+        deleteItensDoPedido(id_pedido);
         Set<ItemPedidoEntity> itens = new HashSet<>();
 
         for (ItemPedidoRecordDto item : pedidoRecordDto.itemPedidoRecordDto()) {
