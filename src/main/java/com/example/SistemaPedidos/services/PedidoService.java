@@ -110,9 +110,7 @@ public class PedidoService {
         itemPedidoRepository.deleteAllByIdPedido(id_pedido);
     }
 
-    /**
-     * Método de UPDATE, deleção dos itens pedidos e reposição com os "novos" itens
-     *
+     /*
      * @param id_pedido
      * @param pedidoRecordDto
      * @throws Exception
@@ -121,6 +119,7 @@ public class PedidoService {
     public void addItensAoPedido(Long id_pedido, PedidoRecordDto pedidoRecordDto) throws Exception {
         PedidoEntity pedidoEncontrado = findPedidoById(id_pedido);
         deleteItensDoPedido(id_pedido);
+        itemPedidoRepository.deleteAllByIdPedido(id_pedido);
         Set<ItemPedidoEntity> itens = new HashSet<>();
 
         for (ItemPedidoRecordDto item : pedidoRecordDto.itemPedidoRecordDto()) {
