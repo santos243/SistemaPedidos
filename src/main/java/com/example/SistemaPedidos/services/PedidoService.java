@@ -104,15 +104,17 @@ public class PedidoService {
         return pedidos;
     }
 
-    //Delete itens do pedido
+    // Delete itens do pedido
     @Transactional
     public void deleteItensDoPedido(Long id_pedido) throws Exception {
         itemPedidoRepository.deleteAllByIdPedido(id_pedido);
     }
 
-     /*
+    /*
      * @param id_pedido
+     *
      * @param pedidoRecordDto
+     *
      * @throws Exception
      */
     @Transactional
