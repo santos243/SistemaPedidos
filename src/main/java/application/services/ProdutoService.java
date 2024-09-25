@@ -22,7 +22,12 @@ public class ProdutoService {
 
     //metodo find
     public ProdutoEntity findProdutoById(Long id_produto) throws Exception {
-        var produto = produtoRepository.findById(id_produto).orElseThrow(() -> new Exception(" "));
+        var produto = produtoRepository.findById(id_produto).orElseThrow(() -> new Exception("Produto nao encontrado no banco de dados"));
+        return produto;
+    }
+    //metodo get
+    public ProdutoEntity getProduto(Long id_produto) throws Exception {
+        var produto = findProdutoById(id_produto);
         return produto;
     }
     //metodo deleteById
@@ -30,7 +35,10 @@ public class ProdutoService {
         produtoRepository.deleteById(id_produto);
     }
     //metodo adicionar produto
-    public ProdutoEntity addProduto(ProdutoRecordDto produtoRecordDto) {
+    public ProdutoEntity addProduto(ProdutoRecordDto produtoRecordDto) throws SemNomeException {
+        if(produtoRecordDto.nome().equals("")) {
+            throw new SemNomeException("O produto não pode haver seu nome vazio", 3);
+        }
         var produto = new ProdutoEntity();
         produto.setNome(produtoRecordDto.nome());
         produto.setValor(produtoRecordDto.valor());
