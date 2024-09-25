@@ -1,4 +1,4 @@
-package application.services.controller;
+package com.application.controllers;
 
 import java.util.List;
 
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.application.entities.entities.PedidoEntity;
+import com.application.services.services.PedidoService;
 import com.example.SistemaPedidos.dtos.PedidoRecordDto;
 
-import application.services.PedidoService;
-import domain.entities.PedidoEntity;
 import jakarta.validation.Valid;
 
 @RestController
@@ -59,14 +59,7 @@ public class PedidoController {
     public ResponseEntity<String> addItemAoPedido(@PathVariable(value = "pedido") Long id_pedido,
             @RequestBody @Valid PedidoRecordDto pedidoRecordDto) throws Exception {
         pedidoService.addItensAoPedido(id_pedido, pedidoRecordDto);
-        return ResponseEntity.status(HttpStatus.OK).body("Itens adicionado ao pedido do usuario");
-    }
-
-    // Apagar itens do pedido
-    @PutMapping("/apagar/itens/id/{pedido}")
-    public ResponseEntity<String> deleteItemPEdido(@PathVariable(value = "pedido") Long id_pedido) throws Exception {
-        pedidoService.deleteItensDoPedido(id_pedido);
-        return ResponseEntity.status(HttpStatus.OK).body("Itens do pedido deletado com sucesso");
+        return ResponseEntity.status(HttpStatus.OK).body("Pedido do usuario atualizado com sucesso");
     }
 
     // Delete no pedido inteiro
@@ -75,4 +68,5 @@ public class PedidoController {
         pedidoService.deletePedidoById(id_pedido);
         return ResponseEntity.status(HttpStatus.OK).body("Deleção do pedido efetuada com sucesso");
     }
+
 }

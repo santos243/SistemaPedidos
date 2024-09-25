@@ -1,12 +1,14 @@
-package com.example.SistemaPedidos.services;
+package application.services;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.example.SistemaPedidos.dtos.UsuarioRecordDto;
-import com.example.SistemaPedidos.entities.UsuarioEntity;
-import com.example.SistemaPedidos.repositories.UsuarioRepository;
+
+import domain.entities.UsuarioEntity;
+import infrastructure.repositories.UsuarioRepository;
+
 
 
 @Service

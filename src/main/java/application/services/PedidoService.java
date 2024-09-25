@@ -1,4 +1,4 @@
-package com.example.SistemaPedidos.services;
+package application.services;
 
 import java.util.HashSet;
 import java.util.List;
@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 
 import com.example.SistemaPedidos.dtos.ItemPedidoRecordDto;
 import com.example.SistemaPedidos.dtos.PedidoRecordDto;
-import com.example.SistemaPedidos.entities.ItemPedidoEntity;
-import com.example.SistemaPedidos.entities.PedidoEntity;
-import com.example.SistemaPedidos.entities.ProdutoEntity;
-import com.example.SistemaPedidos.entities.UsuarioEntity;
-import com.example.SistemaPedidos.repositories.ItemPedidoRepository;
-import com.example.SistemaPedidos.repositories.PedidoRepository;
-import com.example.SistemaPedidos.repositories.ProdutoRepository;
-import com.example.SistemaPedidos.repositories.UsuarioRepository;
 
+import domain.entities.ItemPedidoEntity;
+import domain.entities.PedidoEntity;
+import domain.entities.ProdutoEntity;
+import domain.entities.UsuarioEntity;
+import infrastructure.repositories.ItemPedidoRepository;
+import infrastructure.repositories.PedidoRepository;
+import infrastructure.repositories.ProdutoRepository;
+import infrastructure.repositories.UsuarioRepository;
 import jakarta.transaction.Transactional;
 
 @Service

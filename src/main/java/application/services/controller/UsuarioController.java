@@ -1,4 +1,4 @@
-package com.example.SistemaPedidos.controllers;
+package application.services.controller;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.SistemaPedidos.dtos.UsuarioRecordDto;
-import com.example.SistemaPedidos.entities.UsuarioEntity;
-import com.example.SistemaPedidos.services.UsuarioService;
 
+import application.services.UsuarioService;
+import domain.entities.UsuarioEntity;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PutMapping;
 

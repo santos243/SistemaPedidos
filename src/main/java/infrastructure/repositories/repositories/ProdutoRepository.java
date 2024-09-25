@@ -1,4 +1,4 @@
-package infrastructure.repositories;
+package infrastructure.repositories.repositories;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package com.example.SistemaPedidos.entities;
+package domain.entities;
 
 import java.io.Serializable;
 
@@ -45,6 +45,16 @@ public class ProdutoEntity implements Serializable {
     }
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public ProdutoEntity() {
+    }
+
+    public ProdutoEntity(Long id_produto, String nome, String categoria, double valor) {
+        this.id_produto = id_produto;
+        this.nome = nome;
+        this.categoria = categoria;
+        this.valor = valor;
     }
 
 }

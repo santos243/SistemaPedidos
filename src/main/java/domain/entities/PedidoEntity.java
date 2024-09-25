@@ -1,4 +1,4 @@
-package com.example.SistemaPedidos.entities;
+package domain.entities;
 
 import java.io.Serializable;
 import java.util.Set;
