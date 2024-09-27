@@ -5,10 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,10 +60,17 @@ public class ProdutoServiceTest {
     }
 
     @Test
-    @DisplayName("Deve lançar uma exception para a criação de um produto")
-    public void deveLancarUmaExceptionParaCriação() throws Exception {
+    @DisplayName("Deve lançar uma exception para criação de um produto sem nome")
+    public void deveLancarUmaExceptionParaNomeVazio() throws Exception {
         final var produtoCriado = new ProdutoRecordDto("", "Marcenaria", 300.0);
         assertThrows(SemNomeException.class, () -> produtoService.addProduto(produtoCriado));
+    }
+
+    @Test
+    @DisplayName("Deve lançar uma exception para String categoria, uma vez que ela esta vazia")
+    public void deveLancarUmaExceptionParaCategoriaVazia() throws Exception {
+        final var produto = new ProdutoRecordDto("Cortador de grama eletrico", "", 1699);
+        assertThrows(SemCategoriaException.class, () -> produtoService.addProduto(produto));
     }
 
 }

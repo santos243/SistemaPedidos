@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.SistemaPedidos.dtos.ProdutoRecordDto;
 
 import application.services.ProdutoService;
+import application.services.SemCategoriaException;
+import application.services.SemNomeException;
 import domain.entities.ProdutoEntity;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,7 +30,7 @@ public class ProdutoController {
     }
 
     @PostMapping("/produtos")
-    public ResponseEntity<ProdutoEntity> addProduto(@RequestBody @Valid ProdutoRecordDto produtoRecordDto) {
+    public ResponseEntity<ProdutoEntity> addProduto(@RequestBody @Valid ProdutoRecordDto produtoRecordDto) throws SemNomeException, SemCategoriaException {
         var produto = produtoService.addProduto(produtoRecordDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(produto);
     }

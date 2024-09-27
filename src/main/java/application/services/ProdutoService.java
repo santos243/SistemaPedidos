@@ -35,9 +35,12 @@ public class ProdutoService {
         produtoRepository.deleteById(id_produto);
     }
     //metodo adicionar produto
-    public ProdutoEntity addProduto(ProdutoRecordDto produtoRecordDto) throws SemNomeException {
+    public ProdutoEntity addProduto(ProdutoRecordDto produtoRecordDto) throws SemNomeException, SemCategoriaException {
         if(produtoRecordDto.nome().equals("")) {
-            throw new SemNomeException("O produto não pode haver seu nome vazio", 3);
+            throw new SemNomeException("O produto não pode haver seu nome vazio", 404);
+        }
+        if(produtoRecordDto.categoria().equals("")) {
+            throw new SemCategoriaException("Categoria nâo pode ser vazia", 300);
         }
         var produto = new ProdutoEntity();
         produto.setNome(produtoRecordDto.nome());
