@@ -1,14 +1,12 @@
-package application.services;
+package com.example.SistemaPedidos.application.services.exceptions;
 
-public class SemNomeException extends Exception{
-
+public class SemIdException extends Exception {
     private int codigoErro;
 
-    public SemNomeException(String mensagem, int codigoErro){
-        super(mensagem);
+    public SemIdException(String message, int codigoErro) {
+        super(message);
         this.codigoErro = codigoErro;
     }
-
 
     public int getCodigoErro() {
         return codigoErro;

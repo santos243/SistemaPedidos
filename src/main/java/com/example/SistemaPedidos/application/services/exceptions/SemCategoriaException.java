@@ -1,4 +1,4 @@
-package application.services;
+package com.example.SistemaPedidos.application.services.exceptions;
 
 public class SemCategoriaException extends Exception {
 

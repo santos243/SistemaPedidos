@@ -1,4 +1,4 @@
-package application.services.controller;
+package com.example.SistemaPedidos.application.services.controller;
 
 import java.util.List;
 
@@ -11,12 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.SistemaPedidos.application.services.ProdutoService;
 import com.example.SistemaPedidos.dtos.ProdutoRecordDto;
+import com.example.SistemaPedidos.entities.ProdutoEntity;
 
-import application.services.ProdutoService;
-import application.services.SemCategoriaException;
-import application.services.SemNomeException;
-import domain.entities.ProdutoEntity;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -30,7 +28,7 @@ public class ProdutoController {
     }
 
     @PostMapping("/produtos")
-    public ResponseEntity<ProdutoEntity> addProduto(@RequestBody @Valid ProdutoRecordDto produtoRecordDto) throws SemNomeException, SemCategoriaException {
+    public ResponseEntity<ProdutoEntity> addProduto(@RequestBody @Valid ProdutoRecordDto produtoRecordDto) throws Exception {
         var produto = produtoService.addProduto(produtoRecordDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(produto);
     }

@@ -1,10 +1,10 @@
-package infrastructure.repositories;
+package com.example.SistemaPedidos.dtos.repositories;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import domain.entities.ProdutoEntity;
+import com.example.SistemaPedidos.entities.ProdutoEntity;
 
 
 @Repository

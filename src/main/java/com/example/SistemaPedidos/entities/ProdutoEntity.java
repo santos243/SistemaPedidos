@@ -1,4 +1,4 @@
-package domain.entities;
+package com.example.SistemaPedidos.entities;
 
 import java.io.Serializable;
 
@@ -14,7 +14,7 @@ public class ProdutoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy=GenerationType.TABLE)
     private Long id_produto;
     private String nome;
     private String categoria;
@@ -48,6 +48,10 @@ public class ProdutoEntity implements Serializable {
     }
 
     public ProdutoEntity() {
+    }
+
+    public ProdutoEntity(Long id_produto) {
+        this.id_produto = id_produto;
     }
 
     public ProdutoEntity(Long id_produto, String nome, String categoria, double valor) {

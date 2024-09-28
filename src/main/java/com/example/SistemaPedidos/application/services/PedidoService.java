@@ -1,4 +1,4 @@
-package application.services;
+package com.example.SistemaPedidos.application.services;
 
 import java.util.HashSet;
 import java.util.List;
@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 
 import com.example.SistemaPedidos.dtos.ItemPedidoRecordDto;
 import com.example.SistemaPedidos.dtos.PedidoRecordDto;
+import com.example.SistemaPedidos.dtos.repositories.ItemPedidoRepository;
+import com.example.SistemaPedidos.dtos.repositories.PedidoRepository;
+import com.example.SistemaPedidos.dtos.repositories.ProdutoRepository;
+import com.example.SistemaPedidos.dtos.repositories.UsuarioRepository;
+import com.example.SistemaPedidos.entities.ItemPedidoEntity;
+import com.example.SistemaPedidos.entities.PedidoEntity;
+import com.example.SistemaPedidos.entities.ProdutoEntity;
+import com.example.SistemaPedidos.entities.UsuarioEntity;
 
-import domain.entities.ItemPedidoEntity;
-import domain.entities.PedidoEntity;
-import domain.entities.ProdutoEntity;
-import domain.entities.UsuarioEntity;
-import infrastructure.repositories.ItemPedidoRepository;
-import infrastructure.repositories.PedidoRepository;
-import infrastructure.repositories.ProdutoRepository;
-import infrastructure.repositories.UsuarioRepository;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -46,6 +46,10 @@ public class PedidoService {
         // Busca o usuario pelo ID
         UsuarioEntity usuario = usuarioRepository.findById(pedidoRecordDto.id_usuario())
                 .orElseThrow(() -> new Exception("Usuário não encontrado:/"));
+
+        if (pedidoRecordDto.itemPedidoRecordDto().equals(null)) {
+            throw new NullPointerException("O campo de itens nao pode estar vazio");
+        }
         // Criação de um novo pedido
         PedidoEntity pedido = new PedidoEntity();
         pedido.setUsuario(usuario);
@@ -124,15 +128,15 @@ public class PedidoService {
         // itemPedidoRepository.deleteAllByIdPedido(id_pedido);
         Set<ItemPedidoEntity> itens = new HashSet<>();
 
-        for(ItemPedidoRecordDto item : pedidoRecordDto.itemPedidoRecordDto()) {
+        for (ItemPedidoRecordDto item : pedidoRecordDto.itemPedidoRecordDto()) {
             ProdutoEntity produto = produtoRepository.findById(item.id_produto())
-                                .orElseThrow(() -> new Exception("Produto nao encontrado no banco de dados"));
-                        var itemPedido = new ItemPedidoEntity();
-                            itemPedido.setPedidoEntity(pedidoEncontrado);
-                            itemPedido.setProdutoEntity(produto);
-                            itemPedido.setQuantidade(item.quantidade());
-                                itens.add(itemPedido);
-                                    itemPedidoRepository.save(itemPedido);
+                    .orElseThrow(() -> new Exception("Produto nao encontrado no banco de dados"));
+            var itemPedido = new ItemPedidoEntity();
+            itemPedido.setPedidoEntity(pedidoEncontrado);
+            itemPedido.setProdutoEntity(produto);
+            itemPedido.setQuantidade(item.quantidade());
+            itens.add(itemPedido);
+            itemPedidoRepository.save(itemPedido);
         }
         pedidoEncontrado.setItens(itens);
     }

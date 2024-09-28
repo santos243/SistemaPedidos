@@ -16,12 +16,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 
+import com.example.SistemaPedidos.application.services.ProdutoService;
+import com.example.SistemaPedidos.application.services.exceptions.SemCategoriaException;
+import com.example.SistemaPedidos.application.services.exceptions.SemNomeException;
 import com.example.SistemaPedidos.dtos.ProdutoRecordDto;
+import com.example.SistemaPedidos.dtos.repositories.ProdutoRepository;
+import com.example.SistemaPedidos.entities.ProdutoEntity;
 
-import domain.entities.ProdutoEntity;
-import infrastructure.repositories.ProdutoRepository;
-
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 public class ProdutoServiceTest {
 

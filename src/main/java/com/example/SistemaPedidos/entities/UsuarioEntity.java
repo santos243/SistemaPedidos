@@ -1,8 +1,6 @@
-package domain.entities;
+package com.example.SistemaPedidos.entities;
 
 import java.io.Serializable;
-
-
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +14,7 @@ public class UsuarioEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id_usuario;
     private String nome;
     private String cpf;
@@ -32,13 +30,26 @@ public class UsuarioEntity implements Serializable {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     public String getCpf() {
         return cpf;
     }
+
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
+    public UsuarioEntity() {
+    }
+
+    public UsuarioEntity(Long id_usuario, String nome, String cpf) {
+        this.id_usuario = id_usuario;
+        this.nome = nome;
+        this.cpf = cpf;
+    }
+
 }

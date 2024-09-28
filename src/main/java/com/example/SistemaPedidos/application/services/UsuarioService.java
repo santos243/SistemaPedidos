@@ -1,15 +1,13 @@
-package application.services;
+package com.example.SistemaPedidos.application.services;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.SistemaPedidos.application.services.exceptions.SemNomeException;
 import com.example.SistemaPedidos.dtos.UsuarioRecordDto;
-
-import domain.entities.UsuarioEntity;
-import infrastructure.repositories.UsuarioRepository;
-
-
+import com.example.SistemaPedidos.dtos.repositories.UsuarioRepository;
+import com.example.SistemaPedidos.entities.UsuarioEntity;
 
 @Service
 public class UsuarioService {
@@ -21,11 +19,14 @@ public class UsuarioService {
     }
 
     public UsuarioEntity findUsuarioById(Long id_usuario) throws Exception {
-        var usuario = usuarioRepository.findById(id_usuario).orElseThrow(()-> new Exception(" "));
+        var usuario = usuarioRepository.findById(id_usuario).orElseThrow(() -> new Exception(" "));
         return usuario;
     }
 
-    public UsuarioEntity addUsuario(UsuarioRecordDto usuarioRecordDto) {
+    public UsuarioEntity addUsuario(UsuarioRecordDto usuarioRecordDto) throws SemNomeException {
+        if (usuarioRecordDto.nome().equals(" ")) {
+            throw new SemNomeException("O campo 'nome' não pode estar vazio", 404);
+        }
         var usuario = new UsuarioEntity();
         usuario.setCpf(usuarioRecordDto.cpf());
         usuario.setNome(usuarioRecordDto.nome());

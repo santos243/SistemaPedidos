@@ -1,4 +1,4 @@
-package application.services.controller;
+package com.example.SistemaPedidos.application.services.controller;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.SistemaPedidos.application.services.UsuarioService;
 import com.example.SistemaPedidos.dtos.UsuarioRecordDto;
+import com.example.SistemaPedidos.entities.UsuarioEntity;
 
-import application.services.UsuarioService;
-import domain.entities.UsuarioEntity;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -28,13 +28,15 @@ public class UsuarioController {
     }
 
     @PostMapping("/usuario")
-    public ResponseEntity<UsuarioEntity> addUsuario(@RequestBody@Valid UsuarioRecordDto usuarioRecordDto) {
+    public ResponseEntity<UsuarioEntity> addUsuario(@RequestBody @Valid UsuarioRecordDto usuarioRecordDto)
+            throws Exception {
         var usuario = usuarioService.addUsuario(usuarioRecordDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
     @GetMapping("/usuario/{idUsuario}")
-    public ResponseEntity<UsuarioEntity> getUsuario(@PathVariable(value="idUsuario")Long id_usuario) throws Exception {
+    public ResponseEntity<UsuarioEntity> getUsuario(@PathVariable(value = "idUsuario") Long id_usuario)
+            throws Exception {
         var usuarioEncontrado = usuarioService.findUsuarioById(id_usuario);
         return ResponseEntity.status(HttpStatus.OK).body(usuarioEncontrado);
     }
@@ -46,15 +48,15 @@ public class UsuarioController {
     }
 
     @PutMapping("/usuario/{idUsuario}")
-    public ResponseEntity<Object> updateUsuario(@PathVariable(value="idUsuario")Long id_usuario,
-                                                @RequestBody@Valid UsuarioRecordDto usuarioRecordDto) throws Exception {
+    public ResponseEntity<Object> updateUsuario(@PathVariable(value = "idUsuario") Long id_usuario,
+            @RequestBody @Valid UsuarioRecordDto usuarioRecordDto) throws Exception {
         var usuario = usuarioService.updateUsuario(id_usuario, usuarioRecordDto);
         return ResponseEntity.status(HttpStatus.OK).body(usuario);
-     }
+    }
 
-     @DeleteMapping("/usuario/{idUsuario}")
-     public ResponseEntity<Object> deleteUsuario(@PathVariable(value="idUsuario")Long id_usuario) throws Exception {
+    @DeleteMapping("/usuario/{idUsuario}")
+    public ResponseEntity<Object> deleteUsuario(@PathVariable(value = "idUsuario") Long id_usuario) throws Exception {
         usuarioService.deleteUsuarioById(id_usuario);
         return ResponseEntity.status(HttpStatus.OK).body("Deleção efetuada com sucesso");
-     }
+    }
 }
