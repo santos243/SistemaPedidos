@@ -1,4 +1,4 @@
-package domain.entities;
+package com.example.SistemaPedidos.entities;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -22,7 +22,7 @@ public class PedidoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id_pedido;
 
     @ManyToOne
@@ -55,5 +55,13 @@ public class PedidoEntity implements Serializable {
     public void setUsuario(UsuarioEntity usuario) {
         this.usuario = usuario;
     }
+
+    public PedidoEntity() {
+    }
+
+    public PedidoEntity(Long id_pedido) {
+        this.id_pedido = id_pedido;
+    }
+
 
 }

@@ -5,5 +5,5 @@ import java.util.List;
 
 
 public record PedidoRecordDto(@NotNull Long id_usuario, List<ItemPedidoRecordDto> itemPedidoRecordDto) {
-    
+
 }

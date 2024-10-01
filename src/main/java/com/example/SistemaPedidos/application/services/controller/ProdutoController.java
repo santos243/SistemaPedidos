@@ -1,4 +1,4 @@
-package com.application.controllers;
+package com.example.SistemaPedidos.application.services.controller;
 
 import java.util.List;
 
@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.application.services.services.ProdutoService;
+import com.example.SistemaPedidos.application.services.ProdutoService;
 import com.example.SistemaPedidos.dtos.ProdutoRecordDto;
+import com.example.SistemaPedidos.entities.ProdutoEntity;
 
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PutMapping;
