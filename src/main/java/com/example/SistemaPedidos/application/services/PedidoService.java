@@ -68,7 +68,6 @@ public class PedidoService {
             itemPedido.setPedidoEntity(pedidoSalvo);
             itens.add(itemPedido);
             itemPedidoRepository.save(itemPedido);
-
         }
         pedido.setItens(itens);
         pedido.setId_pedido(pedidoSalvo.getId_pedido());
