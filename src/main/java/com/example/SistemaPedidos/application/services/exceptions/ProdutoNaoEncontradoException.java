@@ -1,10 +1,10 @@
 package com.example.SistemaPedidos.application.services.exceptions;
 
-public class SemCategoriaException extends Exception {
+public class ProdutoNaoEncontradoException extends Exception {
 
     private int codigoErro;
 
-    public SemCategoriaException(String message, int codigoErro) {
+    public ProdutoNaoEncontradoException(String message, int codigoErro) {
         super(message);
         this.codigoErro = codigoErro;
     }

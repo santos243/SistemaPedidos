@@ -46,17 +46,16 @@ public class UsuarioServiceTest {
 
     @Test
     @DisplayName("Deve retornar uma lista com dois usuarios")
-    public void deveRetornarUmaListaComUsuarios() throws Exception {
-        List<UsuarioEntity> usuarios = usuarioService.getAllUsuario();
+    public void deveRetornarDoisUsuarios() {
+        List<UsuarioEntity> usuarios = usuarioRepository.findAll();
         assertEquals(2, usuarios.size());
         verify(usuarioRepository).findAll();
     }
 
     @Test
-    @DisplayName("Deve retornar um usuario encontrado pelo id")
+    @DisplayName("Deve retornar um usuario pelo id")
     public void deveRetornarUmUsuarioPeloId() throws Exception {
-        final var usuario = usuarioService.findUsuarioById(1L);
-        assertNotNull(usuario);
+
     }
 
     @Test

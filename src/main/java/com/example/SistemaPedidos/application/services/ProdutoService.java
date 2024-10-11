@@ -10,8 +10,6 @@ import com.example.SistemaPedidos.dtos.ProdutoRecordDto;
 import com.example.SistemaPedidos.dtos.repositories.ProdutoRepository;
 import com.example.SistemaPedidos.entities.ProdutoEntity;
 
-
-
 @Service
 public class ProdutoService {
 
@@ -21,26 +19,36 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    //metodo find
+    // metodo find
     public ProdutoEntity findProdutoById(Long id_produto) throws Exception {
-        var produto = produtoRepository.findById(id_produto).orElseThrow(() -> new Exception("Produto nao encontrado no banco de dados"));
+        var produto = produtoRepository.findById(id_produto)
+                .orElseThrow(() -> new Exception("Produto nao encontrado no banco de dados, tente utilizar uma id valida."));
         return produto;
     }
-    //metodo get
+
+    // metodo get
     public ProdutoEntity getProduto(Long id_produto) throws Exception {
         var produto = findProdutoById(id_produto);
         return produto;
     }
-    //metodo deleteById
-    public void deleteProdutoById(Long id_produto) {
-        produtoRepository.deleteById(id_produto);
+
+    // metodo deleteById
+    public void deleteProdutoById(Long id_produto) throws Exception {
+        final var produtoEncontrado = findProdutoById(id_produto);
+        produtoRepository.delete(produtoEncontrado);
     }
-    //metodo adicionar produto
-    public ProdutoEntity addProduto(ProdutoRecordDto produtoRecordDto) throws Exception{
-        if(produtoRecordDto.nome().equals("")) {
+
+    // metodo adicionar produto
+    /**
+     * @param produtoRecordDto
+     * @return
+     * @throws Exception
+     */
+    public ProdutoEntity addProduto(ProdutoRecordDto produtoRecordDto) throws Exception {
+        if (produtoRecordDto.nome().equals("")) {
             throw new SemNomeException("O produto não pode haver seu nome vazio", 404);
         }
-        if(produtoRecordDto.categoria().equals("")) {
+        if (produtoRecordDto.categoria().equals("")) {
             throw new SemCategoriaException("Categoria não pode ser vazia", 300);
         }
         var produto = new ProdutoEntity();
@@ -49,14 +57,16 @@ public class ProdutoService {
         produto.setCategoria(produtoRecordDto.categoria());
         return produtoRepository.save(produto);
     }
-    //metodos get para todos e para um
+
+    // metodos get para todos
     public List<ProdutoEntity> getAllProdutos() {
         var produtosencontrados = produtoRepository.findAll();
         return produtosencontrados;
     }
 
     /**
-     * Este metodo sevre para atualizar produtos, porém os pedidos ficarao desatualizados
+     * Este metodo sevre para atualizar produtos.
+     *
      * @param id_produto
      * @param produtoRecordDto
      * @return
