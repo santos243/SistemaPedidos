@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.SistemaPedidos.application.services.ProdutoService;
-import com.example.SistemaPedidos.application.services.exceptions.ProdutoNaoEncontradoException;
 import com.example.SistemaPedidos.dtos.ProdutoRecordDto;
 import com.example.SistemaPedidos.entities.ProdutoEntity;
 
@@ -56,7 +55,7 @@ public class ProdutoController {
     }
 
     @DeleteMapping("/delete/produtos/{id_produto}")
-    public ResponseEntity<String> deleteProduto(@PathVariable(value = "id_produto") Long id_produto) throws ProdutoNaoEncontradoException {
+    public ResponseEntity<Object> deleteProduto(@PathVariable(value = "id_produto")Long id_produto) throws Exception {
         produtoService.deleteProdutoById(id_produto);
         return ResponseEntity.status(HttpStatus.OK).body("Deleção efetuada com sucesso");
     }
