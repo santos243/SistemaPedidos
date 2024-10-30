@@ -54,7 +54,7 @@ public class ProdutoController {
         return ResponseEntity.status(HttpStatus.OK).body(produto);
     }
 
-    @DeleteMapping("/delete/produtos/{id_produto}")
+    @DeleteMapping("/produtos/{id_produto}")
     public ResponseEntity<Object> deleteProduto(@PathVariable(value = "id_produto")Long id_produto) throws Exception {
         produtoService.deleteProdutoById(id_produto);
         return ResponseEntity.status(HttpStatus.OK).body("Deleção efetuada com sucesso");

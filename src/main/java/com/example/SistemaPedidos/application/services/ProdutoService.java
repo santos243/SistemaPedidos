@@ -22,7 +22,8 @@ public class ProdutoService {
     // metodo find
     public ProdutoEntity findProdutoById(Long id_produto) throws Exception {
         var produto = produtoRepository.findById(id_produto)
-                .orElseThrow(() -> new Exception("Produto nao encontrado no banco de dados, tente utilizar uma id valida."));
+                .orElseThrow(
+                        () -> new Exception("Produto nao encontrado no banco de dados, tente utilizar uma id valida."));
         return produto;
     }
 
@@ -47,8 +48,7 @@ public class ProdutoService {
     public ProdutoEntity addProduto(ProdutoRecordDto produtoRecordDto) throws Exception {
         if (produtoRecordDto.nome().equals("")) {
             throw new SemNomeException("O produto não pode haver seu nome vazio", 404);
-        }
-        if (produtoRecordDto.categoria().equals("")) {
+        } else if (produtoRecordDto.categoria().equals("")) {
             throw new SemCategoriaException("Categoria não pode ser vazia", 300);
         }
         var produto = new ProdutoEntity();
