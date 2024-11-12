@@ -3,8 +3,10 @@ package com.example.SistemaPedidos.entities;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,14 +17,14 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "item_pedido")
 public class ItemPedidoEntity implements Serializable {
-// item pedido deve ter referencia ao pedido e ao produto, alem da quantidade.
+    // item pedido deve ter referencia ao pedido e ao produto, alem da quantidade.
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id_itemPedido;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idItemPedido;
 
-    @ManyToOne(targetEntity = PedidoEntity.class)
+    @ManyToOne(targetEntity = PedidoEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "pedido_entity_id_pedido")
     @JsonBackReference
     private PedidoEntity pedidoEntity;
@@ -41,12 +43,17 @@ public class ItemPedidoEntity implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public Long getId_itemPedido() {
-        return id_itemPedido;
+    public ItemPedidoEntity(ProdutoEntity produtoEntity, int quantidade) {
+        this.produtoEntity = produtoEntity;
+        this.quantidade = quantidade;
     }
 
-    public void setId_itemPedido(Long id_itemPedido) {
-        this.id_itemPedido = id_itemPedido;
+    public Long getIdItemPedido() {
+        return idItemPedido;
+    }
+
+    public void setIdItemPedido(Long id_itemPedido) {
+        this.idItemPedido = id_itemPedido;
     }
 
     public ProdutoEntity getProdutoEntity() {

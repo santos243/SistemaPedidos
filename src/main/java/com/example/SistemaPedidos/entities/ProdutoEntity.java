@@ -14,18 +14,18 @@ public class ProdutoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.TABLE)
-    private Long id_produto;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long idProduto;
     private String nome;
     private String categoria;
     private double valor;
 
-    public Long getId_produto() {
-        return id_produto;
+    public Long getIdProduto() {
+        return idProduto;
     }
 
-    public void setId_produto(Long id_produto) {
-        this.id_produto = id_produto;
+    public void setIdProduto(Long id_produto) {
+        this.idProduto = id_produto;
     }
 
     public String getNome() {
@@ -51,11 +51,11 @@ public class ProdutoEntity implements Serializable {
     }
 
     public ProdutoEntity(Long id_produto) {
-        this.id_produto = id_produto;
+        this.idProduto = id_produto;
     }
 
     public ProdutoEntity(Long id_produto, String nome, String categoria, double valor) {
-        this.id_produto = id_produto;
+        this.idProduto = id_produto;
         this.nome = nome;
         this.categoria = categoria;
         this.valor = valor;

@@ -14,17 +14,17 @@ public class UsuarioEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id_usuario;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idUsuario;
     private String nome;
     private String cpf;
 
-    public Long getId_usuario() {
-        return id_usuario;
+    public Long getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setId_usuario(Long id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setIdUsuario(Long id_usuario) {
+        this.idUsuario = id_usuario;
     }
 
     public String getNome() {
@@ -47,7 +47,7 @@ public class UsuarioEntity implements Serializable {
     }
 
     public UsuarioEntity(Long id_usuario, String nome, String cpf) {
-        this.id_usuario = id_usuario;
+        this.idUsuario = id_usuario;
         this.nome = nome;
         this.cpf = cpf;
     }

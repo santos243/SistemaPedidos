@@ -56,22 +56,22 @@ public class PedidoController {
      * @return
      * @throws Exception
      */
-    @PutMapping("/adicionarItensAoPedido/id/{pedido}")
+    @PutMapping("/pedido/{pedido}")
     public ResponseEntity<String> addItemAoPedido(@PathVariable(value = "pedido") Long id_pedido,
             @RequestBody @Valid PedidoRecordDto pedidoRecordDto) throws Exception {
         pedidoService.addItensAoPedido(id_pedido, pedidoRecordDto);
         return ResponseEntity.status(HttpStatus.OK).body("Itens adicionado ao pedido do usuario");
     }
 
-    // Apagar itens do pedido
-    @PutMapping("/apagar/itens/id/{pedido}")
-    public ResponseEntity<String> deleteItemPEdido(@PathVariable(value = "pedido") Long id_pedido) throws Exception {
-        pedidoService.deleteItensDoPedido(id_pedido);
-        return ResponseEntity.status(HttpStatus.OK).body("Itens do pedido deletado com sucesso");
-    }
+    // // Apagar itens do pedido
+    // @PutMapping("/pedido/{pedido}")
+    // public ResponseEntity<String> deleteItemPEdido(@PathVariable(value = "pedido") Long id_pedido) throws Exception {
+    //     pedidoService.deleteItensDoPedido(id_pedido);
+    //     return ResponseEntity.status(HttpStatus.OK).body("Itens do pedido deletado com sucesso");
+    // }
 
     // Delete no pedido inteiro
-    @DeleteMapping("/delete/id/{pedido}")
+    @DeleteMapping("/pedido/{pedido}")
     public ResponseEntity<String> deletePedido(@PathVariable(value = "pedido") Long id_pedido) {
         pedidoService.deletePedidoById(id_pedido);
         return ResponseEntity.status(HttpStatus.OK).body("Deleção do pedido efetuada com sucesso");

@@ -18,12 +18,12 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "pedidos")
 public class PedidoEntity implements Serializable {
-//Pedido faz a relação entre ItemPedido e Usuario em uma tabela
+    // Pedido faz a relação entre ItemPedido e Usuario em uma tabela
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id_pedido;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idPedido;
 
     @ManyToOne
     private UsuarioEntity usuario;
@@ -32,12 +32,15 @@ public class PedidoEntity implements Serializable {
     @OneToMany(mappedBy = "pedidoEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<ItemPedidoEntity> itens;
 
-    public Long getId_pedido() {
-        return id_pedido;
+    public PedidoEntity() {
     }
 
-    public void setId_pedido(Long id_pedido) {
-        this.id_pedido = id_pedido;
+    public Long getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(Long id_pedido) {
+        this.idPedido = id_pedido;
     }
 
     public Set<ItemPedidoEntity> getItens() {
@@ -56,12 +59,8 @@ public class PedidoEntity implements Serializable {
         this.usuario = usuario;
     }
 
-    public PedidoEntity() {
-    }
-
     public PedidoEntity(Long id_pedido) {
-        this.id_pedido = id_pedido;
+        this.idPedido = id_pedido;
     }
-
 
 }
