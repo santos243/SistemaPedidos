@@ -3,10 +3,7 @@ package com.example.SistemaPedidos.entities;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,7 +21,7 @@ public class ItemPedidoEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idItemPedido;
 
-    @ManyToOne(targetEntity = PedidoEntity.class, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "pedido_entity_id_pedido")
     @JsonBackReference
     private PedidoEntity pedidoEntity;

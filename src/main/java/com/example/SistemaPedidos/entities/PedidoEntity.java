@@ -3,7 +3,6 @@ package com.example.SistemaPedidos.entities;
 import java.io.Serializable;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 
 import jakarta.persistence.Entity;
@@ -28,7 +27,7 @@ public class PedidoEntity implements Serializable {
     @ManyToOne
     private UsuarioEntity usuario;
 
-    @JsonManagedReference
+    // @JsonManagedReference
     @OneToMany(mappedBy = "pedidoEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<ItemPedidoEntity> itens;
 
