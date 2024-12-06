@@ -27,7 +27,7 @@ public class PedidoEntity implements Serializable {
     @ManyToOne
     private UsuarioEntity usuario;
 
-    // @JsonManagedReference
+//  @JsonManagedReference
     @OneToMany(mappedBy = "pedidoEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<ItemPedidoEntity> itens;
 

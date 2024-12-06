@@ -106,7 +106,7 @@ public class PedidoService {
         return pedidos;
     }
 
-    // Delete itens do pedido
+    // Delete itens do pedido, sem afetar o pedido
     @Transactional
     public void deleteItensDoPedido(Long id_pedido) throws Exception {
         itemPedidoRepository.deleteAllByIdPedido(id_pedido);
